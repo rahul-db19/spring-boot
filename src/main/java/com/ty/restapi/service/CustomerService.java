@@ -1,6 +1,7 @@
 package com.ty.restapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,23 @@ public class CustomerService {
 		responseStructure.setData(customerList);
 		responseStructure.setHttpStatus(HttpStatus.OK);
 		return responseStructure;
+	}
+
+	public ResponseStructure<?> findCustById(int custId) {
+		Optional<Customer> findCustById = customerDao.findCustById(custId);
+		if(findCustById.isPresent()) {
+			ResponseStructure<Customer> responseStructure = new ResponseStructure<>();
+			Customer customer = findCustById.get();
+			responseStructure.setData(customer);
+			responseStructure.setHttpStatus(HttpStatus.OK);
+			return responseStructure;
+		}
+		else {
+			ResponseStructure<String> responseStructure = new ResponseStructure<>();
+			responseStructure.setData("CUSTOMER ID NOT FOUND");
+			responseStructure.setHttpStatus(HttpStatus.NOT_FOUND);
+			return responseStructure;
+		}
 	}
 	
 }
