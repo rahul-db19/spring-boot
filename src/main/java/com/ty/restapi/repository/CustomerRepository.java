@@ -6,4 +6,6 @@ import com.ty.restapi.dto.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
+	Customer save(long phone);
+
 }

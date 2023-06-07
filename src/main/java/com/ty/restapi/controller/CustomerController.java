@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ty.restapi.dto.Customer;
@@ -43,9 +46,17 @@ public class CustomerController {
 		return new ResponseEntity<>(responseStructure,responseStructure.getHttpStatus());
 	}
 	
+	@PutMapping(path="/update")
+	public ResponseEntity<?> updateCustomer(@RequestBody Customer customer){		
+		ResponseStructure<?> responseStructure = customerService.updateCustomer(customer);
+		return new ResponseEntity<>(responseStructure,responseStructure.getHttpStatus());
+	}
 	
-	
-	
+	@PatchMapping(path="/partupdate/{phone}")
+	public ResponseEntity<?> partialUpdate(@RequestParam int custId,@PathVariable long phone){		
+		ResponseStructure<?> responseStructure = customerService.partialUpdate(custId,phone);
+		return new ResponseEntity<>(responseStructure,responseStructure.getHttpStatus());   
+	}
 	
 
 	/*

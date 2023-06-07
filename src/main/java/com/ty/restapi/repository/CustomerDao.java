@@ -35,5 +35,22 @@ public class CustomerDao {
 		}
 		throw new CustomerIdNotFoundException("Customer ID Not Found");
 	}
-
+	
+	public Customer updateCustomer(Customer customer) {
+		Optional<Customer> findById = customerRepository.findById(customer.getCustid());
+		if(findById.isPresent()) {
+			return customerRepository.save(customer);
+		}
+		throw new CustomerIdNotFoundException("Customer ID is not available for updation");
+	}
+	
+	public Customer partialUpdate(int custId, long phone) {
+		Optional<Customer> customer = customerRepository.findById(custId);
+		if(customer.isPresent()) {
+			Customer custom = customer.get();
+			custom.setPhone(phone);
+			return customerRepository.save(custom);
+		}
+		throw new CustomerIdNotFoundException("Customer ID is not available for updation");
+	}
 }
